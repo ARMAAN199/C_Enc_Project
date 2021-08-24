@@ -4,10 +4,12 @@
 //and delete all otps
 
 //verify is logged in on every req
+//update user route. MUST.
 
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h> 
 
 typedef struct files
 {
@@ -18,10 +20,11 @@ typedef struct files
 
 typedef struct user
 {
-    char user_id[100];
+    int user_id;
     char username[100];
     char password[100];
     int code;
+    int code2;
     int isloggedin;
     files storage[10000];
 }user;
@@ -35,11 +38,21 @@ typedef struct otp
     int ss;
 }otp;
 
+user* create_user(char usrnm[], char pswd[]) {
+    user* obj = malloc(sizeof(user));
+    obj->user_id = 1;
+    strcpy(usrnm ,obj->username);
+    strcpy(pswd, obj->password);
+    obj-> code = 12; //Try to generate these randomly using some sort of password encr.
+    obj-> code2 = 45;//Try to generate these randomly using some sort of password encr.
+    return obj;   
+}
+
 
 int main(void)
 {
     int i , choice;
-    FILE *fp1,*fp2;
+    FILE *usrflptr,*otpflptr;
     char oname[100];
     user det;
     int recsize;
