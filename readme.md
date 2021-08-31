@@ -58,4 +58,4 @@ Other Intended (not sure if I'll be able to implement though) features include:-
 
 ___
 ___
-[Armaan Jain](https:/armaanjain.tech "Armaan Jain")
+[Armaan Jain](https://armaanjain.tech "Armaan Jain")
