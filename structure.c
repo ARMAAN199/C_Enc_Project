@@ -13,6 +13,14 @@
 //auto increment in userid
 
 
+#define ANSI_COLOR_RED     "\x1b[31m"
+#define ANSI_COLOR_GREEN   "\x1b[32m"
+#define ANSI_COLOR_YELLOW  "\x1b[33m"
+#define ANSI_COLOR_BLUE    "\x1b[34m"
+#define ANSI_COLOR_MAGENTA "\x1b[35m"
+#define ANSI_COLOR_CYAN    "\x1b[36m"
+#define ANSI_COLOR_RESET   "\x1b[0m"
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -44,6 +52,8 @@ typedef struct otp
     int mm;
     int ss;
 }otp;
+
+void print_home_screen();
 
 int calculate_user_id()
     {
@@ -87,25 +97,36 @@ void create_user_file(user* obj)
     strcat(location, ".txt");
     if(exists(location))
     {
-        printf("USER ALREADY EXISTS");
+        printf(ANSI_COLOR_RED "USER ALREADY EXISTS" ANSI_COLOR_BLUE "\nPress any key to go back to home screen\n");
     }
     else{
         fp1 = fopen(location , "w+");
-        // fprintf(fp1, "%d", obj->user_id);
-        // fputc('\n', fp1);
-        // fputs(obj->username, fp1);
-        // fputc('\n', fp1);
-        // fputs(obj->password, fp1);
-        // fputc('\n', fp1);
-        fwrite (obj, sizeof(user), 1, fp1);
+        fprintf(fp1, "%d", obj->user_id);
+        fputc('\n', fp1);
+        fputs(obj->username, fp1);
+        fputc('\n', fp1);
+        fputs(obj->password, fp1);
+        fputc('\n', fp1);
+        
+        
+        fclose (fp1);
+        printf("USER CREATED SUCCESSFULY\nPress any key to go back to home screen" ANSI_COLOR_RESET "\n");
+        // fwrite (obj, sizeof(user), 1, fp1);
     }
-    fclose (fp1); 
+        int newinput;
+        scanf("%d",&newinput);
+        switch (newinput)
+        {
+        default:
+            print_home_screen();
+        }
 
     // enter_string_to_file(fp1, obj->username);
 }
 
 void read_user_file(char *username)
 {
+    char* arr[] = {"User_id", "Username", "Password"};
     FILE *fp1,*fp2;
     char location[100] = "Users/";
     strcat(location, username);
@@ -115,16 +136,75 @@ void read_user_file(char *username)
         printf("USER DOES NOT EXIST");
     }
     else{
-        struct user input;
         fp1 = fopen (location, "r"); 
-        while(fread(&input, sizeof(user), 1, fp1)) 
-        {
-        printf ("id = %s name = %s", input.username, input.password);
+        char nextline[10000];
+        int f=0;
+        while (fgets(nextline, sizeof(nextline), fp1)) {
+        printf(ANSI_COLOR_MAGENTA "%s : %s " ANSI_COLOR_RESET "\n", arr[f], nextline);
+        f++;
         }
+        // printf ("File exists");
         fclose (fp1); 
     }
-    // enter_string_to_file(fp1, obj->username);
+    printf("\nPress any key to go back to home screen" ANSI_COLOR_RESET "\n");
+        int newinput;
+        scanf("%d",&newinput);
+        switch (newinput)
+        {
+        default:
+            print_home_screen();
+        }
+
 }
+
+void print_new_user_interface()
+{
+    system("clear");
+    char uname[100], pswd[100];
+    printf(ANSI_COLOR_GREEN "-----------------------------------------------\n");
+                     printf("| Enter Username : ");
+                     scanf("%s",uname);
+                     printf("| Enter Password : ");
+                     scanf("%s",pswd);
+                     printf("|\n" ANSI_COLOR_BLUE);
+    user* obj = create_user(uname,pswd);  
+    create_user_file(obj);
+
+}
+
+void print_home_screen()
+{
+    system("clear");
+    printf(ANSI_COLOR_GREEN "-----------------------------------------------\n");
+                     printf("| Press 1 to create a new user                |\n");
+                     printf("| Press 2 to get user info                    |\n");
+                     printf("| Press 3 to login                            |\n");
+                     printf("| Press 0 to exit                             |\n\n\n");
+                     int input = 1;
+                     printf("Choose an Option  ");
+                    while(input !=0)
+                    {
+                    scanf("%d", &input);
+                    switch (input)
+                    {
+                        case 0:
+                            break;
+                        case 1:
+                            print_new_user_interface();
+                            break;            
+                        case 2:
+                            printf(ANSI_COLOR_YELLOW "Enter the name of the user\n" ANSI_COLOR_RESET);
+                            char uname[100];
+                            scanf("%s",uname);
+                            read_user_file(uname);
+                            break;         
+                        default:
+                            printf(ANSI_COLOR_CYAN "Enter Valid Input : " ANSI_COLOR_RESET);
+                            break;
+                    }
+                    }
+}
+
 // void enter_string_to_file(FILE* fp1, char str[]) {
 //     int i=0;
 //     while(str[i]!='\0')
@@ -137,28 +217,9 @@ void read_user_file(char *username)
 
 int main(void)
 {
-    char uname[100], pswd[100];
-    scanf("%s",uname);
-    scanf("%s",pswd);
-    // printf("Hello%s\n",uname);
-    // printf("HEllo%s",pswd);
-    user* obj = create_user(uname,pswd);
-    create_user_file(obj);
-    printf("Hello%s\n",obj->username);
-    printf("HEllo%s",obj->password);
+    print_home_screen();
 
-    int input;
-    printf("Check Your User Info");
-    scanf("%d", &input);
-    if(input == 2)
-    {
-        read_user_file("armaan");
-    }
-
-
-
-
-    
+    return 0;    
 
     // int i , choice;
     // FILE *fp1,*otpflptr;
