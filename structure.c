@@ -104,23 +104,22 @@ void create_user_file(user* obj)
     // enter_string_to_file(fp1, obj->username);
 }
 
-void read_user_file(user* obj)
+void read_user_file(char *username)
 {
     FILE *fp1,*fp2;
     char location[100] = "Users/";
-    strcat(location, obj->username);
+    strcat(location, username);
     strcat(location, ".txt");
     if(!exists(location))
     {
         printf("USER DOES NOT EXIST");
     }
     else{
+        struct user input;
         fp1 = fopen (location, "r"); 
-        while(fread(obj, sizeof(user), 1, fp1)) 
+        while(fread(&input, sizeof(user), 1, fp1)) 
         {
-        printf ("id = %d name = %s %s
-", input.id, 
-        input.fname, input.lname);
+        printf ("id = %d name = %s %s", input.username, input.password);
         }
         fclose (fp1); 
     }
@@ -147,6 +146,17 @@ int main(void)
     create_user_file(obj);
     printf("Hello%s\n",obj->username);
     printf("HEllo%s",obj->password);
+
+    int input;
+    printf("Check Your User Info");
+    scanf("%d", &input);
+    if(input == 2)
+    {
+        read_user_file('armaan');
+    }
+
+
+
 
     
 
