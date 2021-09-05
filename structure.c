@@ -91,12 +91,13 @@ void create_user_file(user* obj)
     }
     else{
         fp1 = fopen(location , "w+");
-        fprintf(fp1, "%d", obj->user_id);
-        fputc('\n', fp1);
-        fputs(obj->username, fp1);
-        fputc('\n', fp1);
-        fputs(obj->password, fp1);
-        fputc('\n', fp1);
+        // fprintf(fp1, "%d", obj->user_id);
+        // fputc('\n', fp1);
+        // fputs(obj->username, fp1);
+        // fputc('\n', fp1);
+        // fputs(obj->password, fp1);
+        // fputc('\n', fp1);
+        fwrite (obj, sizeof(user), 1, fp1);
     }
     // enter_string_to_file(fp1, obj->username);
 }
