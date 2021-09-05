@@ -119,7 +119,7 @@ void read_user_file(char *username)
         fp1 = fopen (location, "r"); 
         while(fread(&input, sizeof(user), 1, fp1)) 
         {
-        printf ("id = %d name = %s %s", input.username, input.password);
+        printf ("id = %s name = %s", input.username, input.password);
         }
         fclose (fp1); 
     }
@@ -152,7 +152,7 @@ int main(void)
     scanf("%d", &input);
     if(input == 2)
     {
-        read_user_file('armaan');
+        read_user_file("armaan");
     }
 
 
