@@ -134,19 +134,7 @@ void read_user_file(char *username)
     if(!exists(location))
     {
         printf("USER DOES NOT EXIST");
-    }
-    else{
-        fp1 = fopen (location, "r"); 
-        char nextline[10000];
-        int f=0;
-        while (fgets(nextline, sizeof(nextline), fp1)) {
-        printf(ANSI_COLOR_MAGENTA "%s : %s " ANSI_COLOR_RESET "\n", arr[f], nextline);
-        f++;
-        }
-        // printf ("File exists");
-        fclose (fp1); 
-    }
-    printf("\nPress any key to go back to home screen" ANSI_COLOR_RESET "\n");
+        printf("\nPress any key to go back to home screen" ANSI_COLOR_RESET "\n");
         int newinput;
         scanf("%d",&newinput);
         switch (newinput)
@@ -154,6 +142,24 @@ void read_user_file(char *username)
         default:
             print_home_screen();
         }
+    }
+    else{
+        fp1 = fopen (location, "r"); 
+        char nextline[10000];
+        int f=0;
+        while (fgets(nextline, sizeof(nextline), fp1)  && f<2) {
+        printf(ANSI_COLOR_MAGENTA "%s : %s " ANSI_COLOR_RESET "\n", arr[f], nextline);
+        f++;
+        }
+        printf(ANSI_COLOR_YELLOW "Enter Password: " ANSI_COLOR_RESET);
+        char entered_password[100], password[100];
+        scanf("%s", entered_password);
+        strcpy(password , fgets(nextline, sizeof(nextline), fp1));
+        printf("%s %s", password, entered_password);
+        
+        // printf ("File exists");
+        fclose (fp1); 
+    }
 
 }
 
@@ -177,8 +183,7 @@ void print_home_screen()
     system("clear");
     printf(ANSI_COLOR_GREEN "-----------------------------------------------\n");
                      printf("| Press 1 to create a new user                |\n");
-                     printf("| Press 2 to get user info                    |\n");
-                     printf("| Press 3 to login                            |\n");
+                     printf("| Press 2 to login                            |\n");
                      printf("| Press 0 to exit                             |\n\n\n");
                      int input = 1;
                      printf("Choose an Option  ");
