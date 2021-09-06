@@ -188,15 +188,18 @@ void print_home_screen()
                     switch (input)
                     {
                         case 0:
+                            return;
                             break;
                         case 1:
                             print_new_user_interface();
+                            return;
                             break;            
                         case 2:
                             printf(ANSI_COLOR_YELLOW "Enter the name of the user\n" ANSI_COLOR_RESET);
                             char uname[100];
                             scanf("%s",uname);
                             read_user_file(uname);
+                            return;
                             break;         
                         default:
                             printf(ANSI_COLOR_CYAN "Enter Valid Input : " ANSI_COLOR_RESET);
