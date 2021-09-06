@@ -54,6 +54,7 @@ typedef struct otp
 }otp;
 
 void print_home_screen();
+void print_password_screen(char* , char*);
 
 int calculate_user_id()
     {
@@ -151,18 +152,32 @@ void read_user_file(char *username)
         printf(ANSI_COLOR_MAGENTA "%s : %s " ANSI_COLOR_RESET "\n", arr[f], nextline);
         f++;
         }
-        printf(ANSI_COLOR_YELLOW "Enter Password: " ANSI_COLOR_RESET);
-        char entered_password[100], password[100];
-        scanf("%s", entered_password);
+        char password[100];
         strcpy(password , nextline);
-        printf("%s %s", password, entered_password);
-        if(strcmp(password, entered_password))
-        printf("MATCHED");
-        
+        fclose (fp1);
+        printf(ANSI_COLOR_YELLOW "Enter Password: " ANSI_COLOR_RESET);
+        char entered_password[100];
+        scanf("%s", entered_password);
+        print_password_screen(password, entered_password);
         // printf ("File exists");
-        fclose (fp1); 
     }
+}
 
+void print_password_screen(char* password, char* entered_password)
+{
+        if(strcmp("exit", entered_password))
+        {
+            scanf("%s", entered_password);
+            if(strcmp(password, entered_password))
+            {
+                //Logged in interface
+            }
+            else
+            {
+                printf(ANSI_COLOR_YELLOW "Incorrect Password Try Again or type 'exit' to go back to main menu: " ANSI_COLOR_RESET);
+                scanf("%s", entered_password)
+            }
+        }
 }
 
 void print_new_user_interface()
