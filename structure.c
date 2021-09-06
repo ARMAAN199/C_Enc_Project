@@ -154,7 +154,7 @@ void read_user_file(char *username)
         printf(ANSI_COLOR_YELLOW "Enter Password: " ANSI_COLOR_RESET);
         char entered_password[100], password[100];
         scanf("%s", entered_password);
-        strcpy(password , fgets(nextline, sizeof(nextline), fp1));
+        strcpy(password , nextline);
         printf("%s %s", password, entered_password);
         
         // printf ("File exists");
