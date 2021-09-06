@@ -156,6 +156,8 @@ void read_user_file(char *username)
         scanf("%s", entered_password);
         strcpy(password , nextline);
         printf("%s %s", password, entered_password);
+        if(strcmp(password, entered_password))
+        printf("MATCHED");
         
         // printf ("File exists");
         fclose (fp1); 
