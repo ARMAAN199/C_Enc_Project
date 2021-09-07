@@ -247,11 +247,12 @@ void enter_string_to_file(FILE* fp1, char str[]) {
 }
 
 
-int main(void)
-{
-    print_home_screen();
+// int main(void)
+// {
+//     print_home_screen();
+//     return 0;
 
-    return 0;    
+// }    
 
     // int i , choice;
     // FILE *fp1,*otpflptr;
@@ -284,4 +285,3 @@ int main(void)
     // printf("Enter joining year  : ");
     // scanf("%d" , &det.join_year);
     // fwrite(&det,recsize,1,fp1);
-}
