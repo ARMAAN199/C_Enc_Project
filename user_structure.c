@@ -169,35 +169,37 @@ void print_post_login_interface(char* location)
                      printf("|   ----------Logged in with user-----------  |\n");
                      printf("|   ----------"ANSI_COLOR_RED " %s " ANSI_COLOR_CYAN"-----------  |\n", user_locationstr_to_user(location+6));
                      printf("| Press 1 to edit user                        |\n");
-                     printf("| Press 2 to encrypt files                    |\n");
-                     printf("| Press 3 to decrypt files                    |\n");
-                     printf("| Press 4 to logout and return to main menu   |\n");
+                     printf("| Press 2 to encrypt individual file          |\n");
+                     printf("| Press 3 to encrypt multiple files           |\n");
+                     printf("| Press 4 to encrypt all files in directory   |\n");
+                     printf("| Press 5 to decrypt files                    |\n");
+                     printf("| Press 6 to logout and return to main menu   |\n");
                      int input = 1;
                      printf("Choose an Option  ");
-                    // while(input !=0)
-                    // {
-                    // scanf("%d", &input);
-                    // switch (input)
-                    // {
-                    //     case 0:
-                    //         return;
-                    //         break;
-                    //     case 1:
-                    //         print_new_user_interface();
-                    //         return;
-                    //         break;            
-                    //     case 2:
-                    //         printf(ANSI_COLOR_YELLOW "Enter the name of the user\n" ANSI_COLOR_RESET);
-                    //         char uname[100];
-                    //         scanf("%s",uname);
-                    //         read_user_file(uname);
-                    //         return;
-                    //         break;         
-                    //     default:
-                    //         printf(ANSI_COLOR_CYAN "Enter Valid Input : " ANSI_COLOR_RESET);
-                    //         break;
-                    // }
-                    // }
+                     while(input !=0)
+                     {
+                     scanf("%d", &input);
+                     switch (input)
+                     {
+                        case 0:
+                            return;
+                            break;
+                        case 1:
+                            print_new_user_interface();
+                            return;
+                            break;            
+                        case 2:
+                            printf(ANSI_COLOR_YELLOW "Enter the name of the user\n" ANSI_COLOR_RESET);
+                            char uname[100];
+                            scanf("%s",uname);
+                            read_user_file(uname);
+                            return;
+                            break;         
+                        default:
+                            printf(ANSI_COLOR_CYAN "Enter Valid Input : " ANSI_COLOR_RESET);
+                            break;
+                     }
+                     }
 }
 
 void print_new_user_interface()
