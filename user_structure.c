@@ -168,8 +168,10 @@ void print_post_login_interface(char* location)
      printf(ANSI_COLOR_CYAN "-----------------------------------------------\n");
                      printf("|   ----------Logged in with user-----------  |\n");
                      printf("|   ----------"ANSI_COLOR_RED " %s " ANSI_COLOR_CYAN"-----------  |\n", user_locationstr_to_user(location+6));
-                     printf("| Press 2 to login                            |\n");
-                     printf("| Press 0 to exit                             |\n\n\n");
+                     printf("| Press 1 to edit user                        |\n");
+                     printf("| Press 2 to encrypt files                    |\n");
+                     printf("| Press 3 to decrypt files                    |\n");
+                     printf("| Press 4 to logout and return to main menu   |\n");
                      int input = 1;
                      printf("Choose an Option  ");
                     // while(input !=0)
@@ -259,12 +261,8 @@ void enter_string_to_file(FILE* fp1, char str[]) {
 
 char* user_locationstr_to_user(char* str)
 {
-    char newstr[100];
-    for (int i = 0; i < strlen(str)-4; i++)
-    {
-        newstr[i] = str[i];
-    }
-    return newstr;
+    str[strlen(str)-4] = '\0';
+    return str;
 }
 
 
