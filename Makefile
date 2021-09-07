@@ -1,3 +1,3 @@
 final :
-	gcc user_structure.c -o final
+	gcc user_structure.c main.c -o final
 	./final
