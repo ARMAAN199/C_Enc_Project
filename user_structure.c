@@ -167,7 +167,7 @@ void print_post_login_interface(char* location)
     system("clear");
      printf(ANSI_COLOR_CYAN "-----------------------------------------------\n");
                      printf("|   ----------Logged in with user-----------  |\n");
-                     printf("|   ----------"ANSI_COLOR_RED " %s " ANSI_COLOR_CYAN"-----------  |\n", (location+6));
+                     printf("|   ----------"ANSI_COLOR_RED " %s " ANSI_COLOR_CYAN"-----------  |\n", user_locationstr_to_user(location+6));
                      printf("| Press 2 to login                            |\n");
                      printf("| Press 0 to exit                             |\n\n\n");
                      int input = 1;
@@ -255,6 +255,16 @@ void enter_string_to_file(FILE* fp1, char str[]) {
         fputc(str[i],fp1);
         i++;
     }
+}
+
+char* user_locationstr_to_user(char* str)
+{
+    char newstr[100];
+    for (int i = 0; i < strlen(str)-4; i++)
+    {
+        newstr[i] = str[i];
+    }
+    return newstr;
 }
 
 
