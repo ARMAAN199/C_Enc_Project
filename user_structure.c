@@ -143,11 +143,11 @@ void print_password_screen(char* password, char* entered_password, char location
     // printf("%d", strcmp(password, entered_password));
         if(strcmp("exit", entered_password) != 0)
         {
-            if((strcmp(password, strcat(entered_password,"\n") ==0)) || ((strcmp(password, entered_password) == 0)))
+            if((strcmp(password, strcat(entered_password,"\n")) == 0) || (strcmp(password, entered_password) == 0))
             {
                 //Logged in interface
                 printf("LOGGED IN SUCC");
-                // print_post_login_interface(location);
+                print_post_login_interface(location);
             }
             else
             {
@@ -160,6 +160,42 @@ void print_password_screen(char* password, char* entered_password, char location
         {
                 print_home_screen();
         }
+}
+
+void print_post_login_interface(char* location)
+{
+    system("clear");
+     printf(ANSI_COLOR_CYAN "-----------------------------------------------\n");
+                     printf("|   ----------Logged in with user-----------  |\n");
+                     printf("|   ----------"ANSI_COLOR_RED " %s " ANSI_COLOR_CYAN"-----------  |\n", (location+6));
+                     printf("| Press 2 to login                            |\n");
+                     printf("| Press 0 to exit                             |\n\n\n");
+                     int input = 1;
+                     printf("Choose an Option  ");
+                    // while(input !=0)
+                    // {
+                    // scanf("%d", &input);
+                    // switch (input)
+                    // {
+                    //     case 0:
+                    //         return;
+                    //         break;
+                    //     case 1:
+                    //         print_new_user_interface();
+                    //         return;
+                    //         break;            
+                    //     case 2:
+                    //         printf(ANSI_COLOR_YELLOW "Enter the name of the user\n" ANSI_COLOR_RESET);
+                    //         char uname[100];
+                    //         scanf("%s",uname);
+                    //         read_user_file(uname);
+                    //         return;
+                    //         break;         
+                    //     default:
+                    //         printf(ANSI_COLOR_CYAN "Enter Valid Input : " ANSI_COLOR_RESET);
+                    //         break;
+                    // }
+                    // }
 }
 
 void print_new_user_interface()

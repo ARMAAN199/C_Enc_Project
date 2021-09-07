@@ -11,5 +11,5 @@
 
 void print_post_login_interface(char* location)
 {
-    printf("%s", location);
+    printf("s");
 }
