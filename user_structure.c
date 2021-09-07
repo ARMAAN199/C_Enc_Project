@@ -1,5 +1,3 @@
-/*  employee database program       */
-
 //whenever code starts make sure you change is loggedin for all users to 0
 //and delete all otps
 
@@ -134,27 +132,28 @@ void read_user_file(char *username)
         printf(ANSI_COLOR_YELLOW "Enter Password: (or type 'exit' to go back to main menu)" ANSI_COLOR_RESET);
         char entered_password[100];
         scanf("%s", entered_password);
-        print_password_screen(password, entered_password);
+        print_password_screen(password, entered_password, location);
         // printf ("File exists");
     }
 }
 
-void print_password_screen(char* password, char* entered_password)
+void print_password_screen(char* password, char* entered_password, char location[])
 {
     // printf("%s%s", password, entered_password);
     // printf("%d", strcmp(password, entered_password));
         if(strcmp("exit", entered_password) != 0)
         {
-            if(strcmp(password, strcat(entered_password,"\n")) == 0)
+            if(strcmp(password, strcat(entered_password,"\n") || strcmp(password, entered_password) == 0)
             {
                 //Logged in interface
                 printf("LOGGED IN SUCC");
+                // print_post_login_interface(location);
             }
             else
             {
                 printf(ANSI_COLOR_YELLOW "Incorrect Password - Try Again or type 'exit' to go back to main menu: " ANSI_COLOR_RESET);
                 scanf("%s", entered_password);
-                print_password_screen(password, entered_password);
+                print_password_screen(password, entered_password, location);
             }
         }
         else
