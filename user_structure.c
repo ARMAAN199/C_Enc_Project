@@ -143,7 +143,7 @@ void print_password_screen(char* password, char* entered_password, char location
     // printf("%d", strcmp(password, entered_password));
         if(strcmp("exit", entered_password) != 0)
         {
-            if(strcmp(password, strcat(entered_password,"\n") || strcmp(password, entered_password) == 0)
+            if((strcmp(password, strcat(entered_password,"\n") ==0)) || ((strcmp(password, entered_password) == 0)))
             {
                 //Logged in interface
                 printf("LOGGED IN SUCC");
