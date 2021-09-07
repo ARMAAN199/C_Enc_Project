@@ -149,13 +149,13 @@ void read_user_file(char *username)
         char nextline[10000];
         int f=0;
         while (fgets(nextline, sizeof(nextline), fp1)  && f<2) {
-        printf(ANSI_COLOR_MAGENTA "%s : %s " ANSI_COLOR_RESET "\n", arr[f], nextline);
+        printf(ANSI_COLOR_MAGENTA "%s : %s" ANSI_COLOR_RESET, arr[f], nextline);
         f++;
         }
         char password[100];
         strcpy(password , nextline);
         fclose (fp1);
-        printf(ANSI_COLOR_YELLOW "Enter Password: " ANSI_COLOR_RESET);
+        printf(ANSI_COLOR_YELLOW "Enter Password: (or type 'exit' to go back to main menu)" ANSI_COLOR_RESET);
         char entered_password[100];
         scanf("%s", entered_password);
         print_password_screen(password, entered_password);
@@ -165,18 +165,25 @@ void read_user_file(char *username)
 
 void print_password_screen(char* password, char* entered_password)
 {
-        if(strcmp("exit", entered_password))
+    // printf("%s%s", password, entered_password);
+    // printf("%d", strcmp(password, entered_password));
+        if(strcmp("exit", entered_password) != 0)
         {
-            scanf("%s", entered_password);
-            if(strcmp(password, entered_password))
+            if(strcmp(password, strcat(entered_password,"\n")) == 0)
             {
                 //Logged in interface
+                printf("LOGGED IN SUCC");
             }
             else
             {
-                printf(ANSI_COLOR_YELLOW "Incorrect Password Try Again or type 'exit' to go back to main menu: " ANSI_COLOR_RESET);
-                scanf("%s", entered_password)
+                printf(ANSI_COLOR_YELLOW "Incorrect Password - Try Again or type 'exit' to go back to main menu: " ANSI_COLOR_RESET);
+                scanf("%s", entered_password);
+                print_password_screen(password, entered_password);
             }
+        }
+        else
+        {
+                print_home_screen();
         }
 }
 
@@ -230,14 +237,14 @@ void print_home_screen()
                     }
 }
 
-// void enter_string_to_file(FILE* fp1, char str[]) {
-//     int i=0;
-//     while(str[i]!='\0')
-//     {
-//         fputc(str[i],fp1);
-//         i++;
-//     }
-// }
+void enter_string_to_file(FILE* fp1, char str[]) {
+    int i=0;
+    while(str[i]!='\0')
+    {
+        fputc(str[i],fp1);
+        i++;
+    }
+}
 
 
 int main(void)
