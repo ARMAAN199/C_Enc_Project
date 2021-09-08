@@ -268,8 +268,9 @@ void print_post_login_interface(char* location)
                      printf("| Press 3 to encrypt multiple files           |\n");
                      printf("| Press 4 to encrypt all files in directory   |\n");
                      printf("| Press 5 to decrypt individual file          |\n");
-                     printf("| Press 6 to decrypt files                    |\n");
-                     printf("| Press 7 to logout and return to main menu   |\n");
+                     printf("| Press 6 to decrypt multiple files           |\n");
+                     printf("| Press 7 to decrypt all files in directory   |\n");
+                     printf("| Press 8 to logout and return to main menu   |\n");
                      int input = 1;
                      printf(ANSI_COLOR_YELLOW "Choose an Option : " ANSI_COLOR_RESET);
                      scanf("%d", &input);
@@ -280,7 +281,10 @@ void print_post_login_interface(char* location)
                             break;
                         case 2:
                             print_encryptfile_interface(location, 0);
-                            break;      
+                            break;    
+                        case 5:
+                            print_decryptfile_interface(location, 0);
+                            break;                               
                         case 6:
                             print_home_screen();
                             break; 
@@ -360,6 +364,39 @@ void print_encryptfile_interface(char* location, int errcode)
         else
         {
             encrypt1(location, filepath, 15);
+        }
+
+        // printf("\nPress any key to go back to user home \n");
+        // int newinput;
+        // scanf("%d",&newinput);
+        // switch (newinput)
+        // {
+        // default:
+        //     print_post_login_interface(location);
+        // }
+}
+
+void print_decryptfile_interface(char* location, int errcode)
+{
+        system("clear");
+        if(errcode == 1)
+        {
+        printf(REDB "No file found at provided location\n" reset); 
+        }
+        printf(BLUB "Enter path of file to be decrypted or 'exit' to go back to user home\n" reset);
+        char filepath[1000];
+        scanf("%s", filepath);
+        if(strcmp("exit", filepath) == 0)
+        {
+            print_post_login_interface(location);
+        }
+        else if(!exists(filepath))
+        {
+            print_decryptfile_interface(location, 1);
+        }
+        else
+        {
+            decrypt1(location, filepath, 15);
         }
 
         // printf("\nPress any key to go back to user home \n");
