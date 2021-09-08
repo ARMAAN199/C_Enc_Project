@@ -269,7 +269,7 @@ void print_post_login_interface(char* location)
                      printf("| Press 4 to encrypt all files in directory   |\n");
                      printf("| Press 5 to decrypt individual file          |\n");
                      printf("| Press 6 to decrypt files                    |\n");
-                     printf("| Press 6 to logout and return to main menu   |\n");
+                     printf("| Press 7 to logout and return to main menu   |\n");
                      int input = 1;
                      printf(ANSI_COLOR_YELLOW "Choose an Option : " ANSI_COLOR_RESET);
                      scanf("%d", &input);
