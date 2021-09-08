@@ -267,7 +267,8 @@ void print_post_login_interface(char* location)
                      printf("| Press 2 to encrypt individual file          |\n");
                      printf("| Press 3 to encrypt multiple files           |\n");
                      printf("| Press 4 to encrypt all files in directory   |\n");
-                     printf("| Press 5 to decrypt files                    |\n");
+                     printf("| Press 5 to decrypt individual file          |\n");
+                     printf("| Press 6 to decrypt files                    |\n");
                      printf("| Press 6 to logout and return to main menu   |\n");
                      int input = 1;
                      printf(ANSI_COLOR_YELLOW "Choose an Option : " ANSI_COLOR_RESET);
@@ -407,8 +408,11 @@ void encrypt1(char* location, char* filepath, int code)
         ch = fputc(ch, fps);
         ch = fgetc(fpt);
     }
+    remove("temp.txt");
+    printf(BRED "Removing temp file..\n" reset);
     fclose(fps);
     fclose(fpt);
+    printf(BRED "Finalising..\n" reset);
 
     printf(BRED "File Encrypted Successfully!\n" reset);
         printf(ANSI_COLOR_YELLOW "Press any key to go back to user home \n" ANSI_COLOR_RESET);
@@ -419,7 +423,59 @@ void encrypt1(char* location, char* filepath, int code)
         default:
             print_post_login_interface(location);
         }
+}
 
+void decrypt1(char* location, char* filepath, int code)
+{
+    char ch;
+    FILE *fps, *fpt;
+    fps = fopen(filepath, "r");
+    if(fps == NULL)
+        printf("\nFile not found\n");
+    fpt = fopen("temp.txt", "w");
+    if(fpt == NULL)
+        printf("\nCouldn't create temp file\n");
+    else
+    {
+        printf(BGRN "Creating encrypted temp file..\n" reset);
+        ch = fgetc(fps);
+        while(ch != EOF)
+        {
+            ch = ch-code;
+            fputc(ch, fpt);
+            ch = fgetc(fps);
+        }
+        fclose(fps);
+        fclose(fpt);
+    }
+
+    fps = fopen(filepath, "w");
+    if(fps == NULL)
+        printf("\nFile not found\n");
+    fpt = fopen("temp.txt", "r");
+    if(fpt == NULL)
+        printf("\nCouldn't create temp file\n");
+    ch = fgetc(fpt);
+    while(ch != EOF)
+    {
+        ch = fputc(ch, fps);
+        ch = fgetc(fpt);
+    }
+    remove("temp.txt");
+    printf(BGRN "Removing temp file..\n" reset);
+    fclose(fps);
+    fclose(fpt);
+    printf(BGRN "Finalising..\n" reset);
+
+    printf(BGRN "File Decrypted Successfully!\n" reset);
+        printf(ANSI_COLOR_YELLOW "Press any key to go back to user home \n" ANSI_COLOR_RESET);
+        int newinput;
+        scanf("%d",&newinput);
+        switch (newinput)
+        {
+        default:
+            print_post_login_interface(location);
+        }
 }
 
 
