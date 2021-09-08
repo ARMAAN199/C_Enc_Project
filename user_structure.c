@@ -277,9 +277,12 @@ void print_post_login_interface(char* location)
                         case 1:
                             print_edit_user_interface(location);
                             break;
+                        case 2:
+                            print_encryptfile_interface(location, 0);
+                            break;      
                         case 6:
                             print_home_screen();
-                            break;    
+                            break; 
                         // case 1:
                         //     print_new_user_interface();
                         //     return;
@@ -333,7 +336,41 @@ void print_edit_user_interface(char* location)
         default:
             print_post_login_interface(location);
         }
+}
 
+void print_encryptfile_interface(char* location, int errcode)
+{
+        system("clear");
+        if(errcode == 1)
+        {
+        printf(REDB "No file found at provided location\n" reset); 
+        }
+        printf(BLUB "Enter path of file to be encrypted or 'exit' to go back to user home\n" reset);
+        char filepath[1000];
+        scanf("%s", filepath);
+        if(strcpm("exit", filepath) == 0)
+        {
+            print_post_login_interface(location);
+        }
+        else if(!exists(filepath))
+        {
+            print_encryptfile_interface(location, 1);
+        }
+        else
+        {
+            // FILE* fp1 = fopen (filepath, "r+");
+            // FILE* fp2 = fopen ("Users/temp.txt", "w+");
+            printf("encrypt file now. bish");
+        }
+
+        // printf("\nPress any key to go back to user home \n");
+        // int newinput;
+        // scanf("%d",&newinput);
+        // switch (newinput)
+        // {
+        // default:
+        //     print_post_login_interface(location);
+        // }
 }
 
 
