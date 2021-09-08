@@ -270,13 +270,16 @@ void print_post_login_interface(char* location)
                      printf("| Press 5 to decrypt files                    |\n");
                      printf("| Press 6 to logout and return to main menu   |\n");
                      int input = 1;
-                     printf(ANSI_COLOR_YELLOW "Choose an Option %s " ANSI_COLOR_RESET, location);
+                     printf(ANSI_COLOR_YELLOW "Choose an Option : " ANSI_COLOR_RESET);
                      scanf("%d", &input);
                      switch (input)
                      {
                         case 1:
                             print_edit_user_interface(location);
                             break;
+                        case 6:
+                            print_home_screen();
+                            break;    
                         // case 1:
                         //     print_new_user_interface();
                         //     return;
@@ -317,15 +320,18 @@ void print_edit_user_interface(char* location)
         }
         remove(location);
         rename("Users/temp.txt", location);
-        printf("\n\n" BYEL "Your Password Was Changed Successfully" reset);
 
-        printf(BCYN "\nPress any key to go back to user home" reset "\n");
+        fclose(fp1);
+        fclose(fp2);
+
+        printf(BGRN "Your Password Was Changed" reset);
+        printf("\nPress any key to go back to user home \n");
         int newinput;
         scanf("%d",&newinput);
         switch (newinput)
         {
         default:
-            print_home_screen();
+            print_post_login_interface(location);
         }
 
 }
