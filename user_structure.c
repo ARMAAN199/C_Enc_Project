@@ -60,6 +60,8 @@
 #define CYNB "\e[46m"
 #define WHTB "\e[47m"
 
+#define reset "\e[0m"
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -295,14 +297,37 @@ void print_post_login_interface(char* location)
 void print_edit_user_interface(char* location)
 {
         system("clear");
-        printf(an)
-        FILE* fp1 = fopen (location, "r+"); 
+        printf(MAGB "Enter New Password\n" reset);
+        char newpwd[100];
+        scanf("%s", newpwd);
+        strcat(newpwd, "\n");
+        FILE* fp1 = fopen (location, "r+");
+        FILE* fp2 = fopen ("Users/temp.txt", "w+");
+
         char nextline[10000];
         int f=0;
         while (fgets(nextline, sizeof(nextline), fp1)) {
-        printf(ANSI_COLOR_MAGENTA "%s " ANSI_COLOR_RESET, nextline);
         f++;
+        if(f==3)
+        {
+            fputs(newpwd, fp2);
+            continue;
         }
+        fputs(nextline, fp2);
+        }
+        remove(location);
+        rename("Users/temp.txt", location);
+        printf("\n\n" BYEL "Your Password Was Changed Successfully" reset);
+
+        printf(BCYN "\nPress any key to go back to user home" reset "\n");
+        int newinput;
+        scanf("%d",&newinput);
+        switch (newinput)
+        {
+        default:
+            print_home_screen();
+        }
+
 }
 
 
