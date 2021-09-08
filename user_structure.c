@@ -19,6 +19,47 @@
 #define ANSI_COLOR_CYAN    "\x1b[36m"
 #define ANSI_COLOR_RESET   "\x1b[0m"
 
+//Regular bold text
+#define BBLK "\e[1;30m"
+#define BRED "\e[1;31m"
+#define BGRN "\e[1;32m"
+#define BYEL "\e[1;33m"
+#define BBLU "\e[1;34m"
+#define BMAG "\e[1;35m"
+#define BCYN "\e[1;36m"
+#define BWHT "\e[1;37m"
+
+//Regular underline text
+#define UBLK "\e[4;30m"
+#define URED "\e[4;31m"
+#define UGRN "\e[4;32m"
+#define UYEL "\e[4;33m"
+#define UBLU "\e[4;34m"
+#define UMAG "\e[4;35m"
+#define UCYN "\e[4;36m"
+#define UWHT "\e[4;37m"
+
+//High intensty background 
+#define BLKHB "\e[0;100m"
+#define REDHB "\e[0;101m"
+#define GRNHB "\e[0;102m"
+#define YELHB "\e[0;103m"
+#define BLUHB "\e[0;104m"
+#define MAGHB "\e[0;105m"
+#define CYNHB "\e[0;106m"
+#define WHTHB "\e[0;107m"
+
+
+//Regular background
+#define BLKB "\e[40m"
+#define REDB "\e[41m"
+#define GRNB "\e[42m"
+#define YELB "\e[43m"
+#define BLUB "\e[44m"
+#define MAGB "\e[45m"
+#define CYNB "\e[46m"
+#define WHTB "\e[47m"
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -162,46 +203,6 @@ void print_password_screen(char* password, char* entered_password, char location
         }
 }
 
-void print_post_login_interface(char* location)
-{
-    system("clear");
-     printf(ANSI_COLOR_CYAN "-----------------------------------------------\n");
-                     printf("|   ----------Logged in with user-----------  |\n");
-                     printf("|   ----------"ANSI_COLOR_RED " %s " ANSI_COLOR_CYAN"-----------  |\n", user_locationstr_to_user(location+6));
-                     printf("| Press 1 to edit user                        |\n");
-                     printf("| Press 2 to encrypt individual file          |\n");
-                     printf("| Press 3 to encrypt multiple files           |\n");
-                     printf("| Press 4 to encrypt all files in directory   |\n");
-                     printf("| Press 5 to decrypt files                    |\n");
-                     printf("| Press 6 to logout and return to main menu   |\n");
-                     int input = 1;
-                     printf("Choose an Option  ");
-                     while(input !=0)
-                     {
-                     scanf("%d", &input);
-                     switch (input)
-                     {
-                        case 0:
-                            return;
-                            break;
-                        case 1:
-                            print_new_user_interface();
-                            return;
-                            break;            
-                        case 2:
-                            printf(ANSI_COLOR_YELLOW "Enter the name of the user\n" ANSI_COLOR_RESET);
-                            char uname[100];
-                            scanf("%s",uname);
-                            read_user_file(uname);
-                            return;
-                            break;         
-                        default:
-                            printf(ANSI_COLOR_CYAN "Enter Valid Input : " ANSI_COLOR_RESET);
-                            break;
-                     }
-                     }
-}
-
 void print_new_user_interface()
 {
     system("clear");
@@ -251,6 +252,59 @@ void print_home_screen()
                     }
                     }
 }
+
+void print_post_login_interface(char* location)
+{
+    char copy[100];
+    strcpy(copy, location);
+    system("clear");
+     printf(ANSI_COLOR_CYAN "-----------------------------------------------\n");
+                     printf("|   ----------Logged in with user-----------  |\n");
+                     printf("|   ----------"ANSI_COLOR_RED " %s " ANSI_COLOR_CYAN"-----------  |\n", user_locationstr_to_user(copy+6));
+                     printf("| Press 1 to change password                  |\n");
+                     printf("| Press 2 to encrypt individual file          |\n");
+                     printf("| Press 3 to encrypt multiple files           |\n");
+                     printf("| Press 4 to encrypt all files in directory   |\n");
+                     printf("| Press 5 to decrypt files                    |\n");
+                     printf("| Press 6 to logout and return to main menu   |\n");
+                     int input = 1;
+                     printf(ANSI_COLOR_YELLOW "Choose an Option %s " ANSI_COLOR_RESET, location);
+                     scanf("%d", &input);
+                     switch (input)
+                     {
+                        case 1:
+                            print_edit_user_interface(location);
+                            break;
+                        // case 1:
+                        //     print_new_user_interface();
+                        //     return;
+                        //     break;            
+                        // case 2:
+                        //     printf(ANSI_COLOR_YELLOW "Enter the name of the user\n" ANSI_COLOR_RESET);
+                        //     char uname[100];
+                        //     scanf("%s",uname);
+                        //     read_user_file(uname);
+                        //     return;
+                        //     break;         
+                        default:
+                            printf(ANSI_COLOR_CYAN "Enter Valid Input : " ANSI_COLOR_RESET);
+                            break;
+                     }
+}
+
+void print_edit_user_interface(char* location)
+{
+        system("clear");
+        printf(an)
+        FILE* fp1 = fopen (location, "r+"); 
+        char nextline[10000];
+        int f=0;
+        while (fgets(nextline, sizeof(nextline), fp1)) {
+        printf(ANSI_COLOR_MAGENTA "%s " ANSI_COLOR_RESET, nextline);
+        f++;
+        }
+}
+
 
 void enter_string_to_file(FILE* fp1, char str[]) {
     int i=0;

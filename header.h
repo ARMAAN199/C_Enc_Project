@@ -36,3 +36,4 @@ void print_home_screen();
 void enter_string_to_file(FILE* , char[]);
 void print_post_login_interface(char*);
 char* user_locationstr_to_user(char* );
+void print_edit_user_interface(char* );
