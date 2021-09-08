@@ -359,7 +359,6 @@ void print_encryptfile_interface(char* location, int errcode)
         else
         {
             encrypt1(location, filepath, 15);
-            printf("encrypt file now. bish");
         }
 
         // printf("\nPress any key to go back to user home \n");
@@ -412,6 +411,15 @@ void encrypt1(char* location, char* filepath, int code)
     fclose(fpt);
 
     printf(BRED "File Encrypted Successfully!\n" reset);
+        printf(ANSI_COLOR_YELLOW "Press any key to go back to user home \n" ANSI_COLOR_RESET);
+        int newinput;
+        scanf("%d",&newinput);
+        switch (newinput)
+        {
+        default:
+            print_post_login_interface(location);
+        }
+
 }
 
 
