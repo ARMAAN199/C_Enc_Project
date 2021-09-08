@@ -348,7 +348,7 @@ void print_encryptfile_interface(char* location, int errcode)
         printf(BLUB "Enter path of file to be encrypted or 'exit' to go back to user home\n" reset);
         char filepath[1000];
         scanf("%s", filepath);
-        if(strcpm("exit", filepath) == 0)
+        if(strcmp("exit", filepath) == 0)
         {
             print_post_login_interface(location);
         }
@@ -358,8 +358,7 @@ void print_encryptfile_interface(char* location, int errcode)
         }
         else
         {
-            // FILE* fp1 = fopen (filepath, "r+");
-            // FILE* fp2 = fopen ("Users/temp.txt", "w+");
+            encrypt1(location, filepath, 15);
             printf("encrypt file now. bish");
         }
 
@@ -371,6 +370,48 @@ void print_encryptfile_interface(char* location, int errcode)
         // default:
         //     print_post_login_interface(location);
         // }
+}
+
+void encrypt1(char* location, char* filepath, int code)
+{
+    char ch;
+    FILE *fps, *fpt;
+    fps = fopen(filepath, "r");
+    if(fps == NULL)
+        printf("\nFile not found\n");
+    fpt = fopen("temp.txt", "w");
+    if(fpt == NULL)
+        printf("\nCouldn't create temp file\n");
+    else
+    {
+        printf(BRED "Creating encrypted temp file..\n" reset);
+        ch = fgetc(fps);
+        while(ch != EOF)
+        {
+            ch = ch+code;
+            fputc(ch, fpt);
+            ch = fgetc(fps);
+        }
+        fclose(fps);
+        fclose(fpt);
+    }
+
+    fps = fopen(filepath, "w");
+    if(fps == NULL)
+        printf("\nFile not found\n");
+    fpt = fopen("temp.txt", "r");
+    if(fpt == NULL)
+        printf("\nCouldn't create temp file\n");
+    ch = fgetc(fpt);
+    while(ch != EOF)
+    {
+        ch = fputc(ch, fps);
+        ch = fgetc(fpt);
+    }
+    fclose(fps);
+    fclose(fpt);
+
+    printf(BRED "File Encrypted Successfully!\n" reset);
 }
 
 
