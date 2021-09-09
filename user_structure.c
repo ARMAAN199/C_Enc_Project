@@ -285,7 +285,7 @@ void print_post_login_interface(char* location)
                         case 5:
                             print_decryptfile_interface(location, 0);
                             break;                               
-                        case 6:
+                        case 8:
                             print_home_screen();
                             break; 
                         // case 1:
@@ -436,7 +436,7 @@ void encrypt1(char* location, char* filepath, int code)
     fps = fopen(filepath, "w");
     if(fps == NULL)
         printf("\nFile not found\n");
-    fpt = fopen("temp.txt", "r");
+    fpt = fopen("temp.text", "r");
     if(fpt == NULL)
         printf("\nCouldn't create temp file\n");
     ch = fgetc(fpt);
@@ -445,7 +445,7 @@ void encrypt1(char* location, char* filepath, int code)
         ch = fputc(ch, fps);
         ch = fgetc(fpt);
     }
-    remove("temp.txt");
+    // remove("temp.png");
     printf(BRED "Removing temp file..\n" reset);
     fclose(fps);
     fclose(fpt);
@@ -469,7 +469,7 @@ void decrypt1(char* location, char* filepath, int code)
     fps = fopen(filepath, "r");
     if(fps == NULL)
         printf("\nFile not found\n");
-    fpt = fopen("temp.txt", "w");
+    fpt = fopen("temp", "w");
     if(fpt == NULL)
         printf("\nCouldn't create temp file\n");
     else
@@ -478,7 +478,7 @@ void decrypt1(char* location, char* filepath, int code)
         ch = fgetc(fps);
         while(ch != EOF)
         {
-            ch = ch-code;
+            // ch = ch-code;
             fputc(ch, fpt);
             ch = fgetc(fps);
         }
@@ -489,7 +489,7 @@ void decrypt1(char* location, char* filepath, int code)
     fps = fopen(filepath, "w");
     if(fps == NULL)
         printf("\nFile not found\n");
-    fpt = fopen("temp.txt", "r");
+    fpt = fopen("temp", "r");
     if(fpt == NULL)
         printf("\nCouldn't create temp file\n");
     ch = fgetc(fpt);
@@ -498,7 +498,7 @@ void decrypt1(char* location, char* filepath, int code)
         ch = fputc(ch, fps);
         ch = fgetc(fpt);
     }
-    remove("temp.txt");
+    remove("temp");
     printf(BGRN "Removing temp file..\n" reset);
     fclose(fps);
     fclose(fpt);

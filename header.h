@@ -38,4 +38,6 @@ void print_post_login_interface(char*);
 char* user_locationstr_to_user(char* );
 void print_edit_user_interface(char* );
 void print_encryptfile_interface(char*, int);
+void print_decryptfile_interface(char*, int);
 void encrypt1(char*, char*, int);
+void decrypt1(char*, char*, int);
