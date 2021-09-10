@@ -436,6 +436,8 @@ void print_decryptfile_interface(char* location, int errcode)
 
 void encrypt1(char* location, char* filepath, int code)
 {
+
+    printf("%d\n", belongs(location, filepath));
     char ch;
     FILE *fps, *fpt;
     fps = fopen(filepath, "r");
@@ -548,6 +550,36 @@ void decrypt1(char* location, char* filepath, int code)
         default:
             print_post_login_interface(location);
         }
+}
+
+int belongs(char* location, char* filepath)
+{
+        FILE* fp1 = fopen (location, "r"); 
+        char nextline[10000];
+        int f=0;
+        while (fgets(nextline, sizeof(nextline), fp1)  && f<4) {
+        f++;
+        }
+        if(strcmp(nextline,"")!=0)
+        {
+            if(strcmp(filepath, nextline) == 0)
+            {
+                return 1;
+            }
+            else
+            {
+                while (fgets(nextline, sizeof(nextline), fp1))
+                {
+                    if(strcmp(filepath, nextline) == 0)
+                    {
+                        return 1;
+                    }
+                }
+            }
+            return 0;
+        }
+        return 0;
+        fclose (fp1);
 }
 
 
