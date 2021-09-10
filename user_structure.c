@@ -437,61 +437,72 @@ void print_decryptfile_interface(char* location, int errcode)
 void encrypt1(char* location, char* filepath, int code)
 {
 
-    printf("%d\n", belongs(location, filepath));
-    char ch;
-    FILE *fps, *fpt;
-    fps = fopen(filepath, "r");
-    if(fps == NULL)
-        printf("\nFile not found\n");
-    fpt = fopen("tempfile.png", "w");
-    if(fpt == NULL)
-        printf("\nCouldn't create temp file\n");
-    else
+    if(belongs_to(location, filepath) == 2)
     {
-        printf(BRED "Creating encrypted temp file..\n" reset);
-        ch = fgetc(fps);
-        while(ch != EOF)
-        {
-            ch = ch+code;
-            fputc(ch, fpt);
-            ch = fgetc(fps);
-        }
-        fclose(fps);
-        fclose(fpt);
+        //return
     }
-
-    remove(filepath);
-
-    FILE* fps2,*fpt2;
-    fps2 = fopen(filepath, "w");
-    if(fps2 == NULL)
-        printf("\nFile not found\n");
-    fpt2 = fopen("tempfile.png", "r");
-    if(fpt2 == NULL)
-        printf("\nCouldn't read temp file\n");
-    else
+    else if(belongs_to(location, filepath) == 0 || belongs_to(location, filepath) == 1)
     {
-        ch = fgetc(fpt2);
-        while(ch != EOF)
+        if(belongs_to(location, filepath) == 0)
         {
-            ch = fputc(ch, fps2);
-            ch = fgetc(fpt2);
+            //append
+            
         }
-        fclose(fps2);
-        fclose(fpt2);
-    }
-    remove("tempfile.png");
-    printf(BRED "Removing temp file..\n" reset);
-    printf(BRED "Finalising..\n" reset);
+                char ch;
+                FILE *fps, *fpt;
+                fps = fopen(filepath, "r");
+                if(fps == NULL)
+                printf("\nFile not found\n");
+                fpt = fopen("tempfile.png", "w");
+                if(fpt == NULL)
+                    printf("\nCouldn't create temp file\n");
+                else
+                {
+                    printf(BRED "Creating encrypted temp file..\n" reset);
+                    ch = fgetc(fps);
+                    while(ch != EOF)
+                    {
+                     ch = ch+code;
+                     fputc(ch, fpt);
+                     ch = fgetc(fps);
+                     }
+                fclose(fps);
+                fclose(fpt);
+                }
 
-    printf(BRED "File Encrypted Successfully!\n" reset);
-        printf(ANSI_COLOR_YELLOW "Press any key to go back to user home \n" ANSI_COLOR_RESET);
-        int newinput;
-        scanf("%d",&newinput);
-        switch (newinput)
-        {
-        default:
-            print_post_login_interface(location);
+                remove(filepath);
+
+                FILE* fps2,*fpt2;
+                fps2 = fopen(filepath, "w");
+                if(fps2 == NULL)
+                printf("\nFile not found\n");
+                fpt2 = fopen("tempfile.png", "r");
+                if(fpt2 == NULL)
+                printf("\nCouldn't read temp file\n");
+                else
+                {
+                ch = fgetc(fpt2);
+                while(ch != EOF)
+                {
+                    ch = fputc(ch, fps2);
+                    ch = fgetc(fpt2);
+                }
+                fclose(fps2);
+                fclose(fpt2);
+                }
+                remove("tempfile.png");
+                printf(BRED "Removing temp file..\n" reset);
+                printf(BRED "Finalising..\n" reset);
+
+                printf(BRED "File Encrypted Successfully!\n" reset);
+                printf(ANSI_COLOR_YELLOW "Press any key to go back to user home \n" ANSI_COLOR_RESET);
+                int newinput;
+                scanf("%d",&newinput);
+                switch (newinput)
+                {
+                default:
+                    print_post_login_interface(location);
+                } 
         }
 }
 
@@ -580,6 +591,33 @@ int belongs(char* location, char* filepath)
         }
         return 0;
         fclose (fp1);
+}
+
+int belongs_to(char* location, char* filepath)
+{
+    DIR *d;
+    struct dirent *dir;
+    d = opendir("Users");
+    if (d)
+    {
+        while ((dir = readdir(d)) != NULL)
+        {
+            char temploc[100] = "Users/";
+            strcat(temploc, dir->d_name);
+            if(strcmp(location, temploc) == 0)
+            {
+                if(belongs(temploc, filepath))
+                return 1;
+            }
+            else
+            {
+                if(belongs(temploc, filepath))
+                return 2;
+            }
+        }
+        closedir(d);
+    }
+    return 0;
 }
 
 

@@ -42,3 +42,4 @@ void print_decryptfile_interface(char*, int);
 void encrypt1(char*, char*, int);
 void decrypt1(char*, char*, int);
 int belongs(char*, char*);
+int belongs_to(char*, char*);
