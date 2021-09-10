@@ -271,10 +271,10 @@ void print_post_login_interface(char* location)
                      printf("| Press 1 to change password                  |\n");
                      printf("| Press 2 to encrypt individual file          |\n");
                      printf("| Press 3 to encrypt multiple files           |\n");
-                     printf("| Press 4 to encrypt all files in directory   |\n");
+                    //  printf("| Press 4 to encrypt all files in directory   |\n");
                      printf("| Press 5 to decrypt individual file          |\n");
                      printf("| Press 6 to decrypt multiple files           |\n");
-                     printf("| Press 7 to decrypt all files in directory   |\n");
+                    //  printf("| Press 7 to decrypt all files in directory   |\n");
                      printf("| Press 8 to logout and return to main menu   |\n");
                      int input = 1;
                      printf(ANSI_COLOR_YELLOW "Choose an Option : " ANSI_COLOR_RESET);
@@ -436,17 +436,26 @@ void print_decryptfile_interface(char* location, int errcode)
 
 void encrypt1(char* location, char* filepath, int code)
 {
-
-    if(belongs_to(location, filepath) == 2)
+    int belong_code = belongs_to(location, filepath);
+    if(belong_code == 2)
     {
         //return
+        printf(ANSI_COLOR_RED "This file belongs to some other user.\n" ANSI_COLOR_RESET);
+                printf(ANSI_COLOR_YELLOW "Press any key to go back to user home \n" ANSI_COLOR_RESET);
+                int newinput;
+                scanf("%d",&newinput);
+                switch (newinput)
+                {
+                default:
+                    print_post_login_interface(location);
+                } 
     }
-    else if(belongs_to(location, filepath) == 0 || belongs_to(location, filepath) == 1)
+    else if(belong_code == 0 || belong_code == 1)
     {
-        if(belongs_to(location, filepath) == 0)
+        if(belong_code == 0)
         {
             //append
-            
+            write_to_user(location, filepath);
         }
                 char ch;
                 FILE *fps, *fpt;
@@ -508,6 +517,22 @@ void encrypt1(char* location, char* filepath, int code)
 
 void decrypt1(char* location, char* filepath, int code)
 {
+    int belong_code = belongs_to(location, filepath);
+    if(belong_code == 2 || belong_code == 0)
+    {
+        //return
+        printf(ANSI_COLOR_RED "This file belongs to some other user.\n" ANSI_COLOR_RESET);
+                printf(ANSI_COLOR_YELLOW "Press any key to go back to user home \n" ANSI_COLOR_RESET);
+                int newinput;
+                scanf("%d",&newinput);
+                switch (newinput)
+                {
+                default:
+                    print_post_login_interface(location);
+                } 
+    }
+    else
+    {
     char ch;
     FILE *fps, *fpt;
     fps = fopen(filepath, "r");
@@ -561,10 +586,15 @@ void decrypt1(char* location, char* filepath, int code)
         default:
             print_post_login_interface(location);
         }
+    }
 }
 
 int belongs(char* location, char* filepath)
 {
+        char tempfilepath[100];
+        strcpy(tempfilepath, filepath);
+        strcat(tempfilepath, "\n");
+        // printf("checking for user %s\n", location);
         FILE* fp1 = fopen (location, "r"); 
         char nextline[10000];
         int f=0;
@@ -573,20 +603,25 @@ int belongs(char* location, char* filepath)
         }
         if(strcmp(nextline,"")!=0)
         {
-            if(strcmp(filepath, nextline) == 0)
-            {
+            // printf("Nextline to be checked : %s\n with %s", nextline, tempfilepath);
+            if(strcmp(tempfilepath, nextline) == 0)
+            {   
+                // printf("Returning 1");
                 return 1;
             }
             else
             {
                 while (fgets(nextline, sizeof(nextline), fp1))
                 {
-                    if(strcmp(filepath, nextline) == 0)
+                    // printf("Nextline to be checked : %s\n with %s", nextline, tempfilepath);
+                    if(strcmp(tempfilepath, nextline) == 0)
                     {
+                        // printf("returning 1");
                         return 1;
                     }
                 }
             }
+            // printf("NOT FOUND\n");
             return 0;
         }
         return 0;
@@ -618,6 +653,14 @@ int belongs_to(char* location, char* filepath)
         closedir(d);
     }
     return 0;
+}
+
+void write_to_user(char* location, char* filepath)
+{
+    FILE *fa = fopen(location, "a");
+	fputs(filepath, fa);
+    fputc('\n', fa);
+    fclose(fa);
 }
 
 

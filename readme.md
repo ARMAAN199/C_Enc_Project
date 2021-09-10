@@ -1,8 +1,8 @@
 # **Project Description**
 ___
-This project is for **securing** certain **files** in a user's system according to different passcodes that the user creates. 
+This project is for **securing** certain **files** in a user's system with passcodes that the users creates. 
 
-You can make different passwords and map them to different files so that only a specific collection of files are accessible that are mapped to that particular passcode.
+Files that are encrypted by one user can only be decrypted by that user themselves once they log in. Other users can't even encrypt the file once the primary user has decrypted it. 
 
 
 
@@ -13,14 +13,21 @@ ___
 * Achieve secure user Authentication
 * Add other layers of security on files like:
   * Move locked files to another location. So that they are not visible at the original location and even if someone reaches the new location. They won't be able to access the content as the file would be encrypted.
-  * Auto logout all users on program startup.
+  * Auto logout all users on program startup. (Only if sessions are added)
 
 
 # Specifications
 > What each file does
 ___
 * Users folder contains the data of all users.
-* I'll Add details of other files as the project goes on.
+* header.c has definations of the functions and structs
+* main.c calls the default home screen
+* Makefile contains the gcc command to build the program. 
+* connection.c contains experimental function to connect it with database (Not implemented yet)
+* post_login_interface.c defines the terminal colors.
+* user_strcture.c contains all the logic behind the program.
+* **TO RUN :  make -B**
+
 
 
 # Design
@@ -28,7 +35,6 @@ ___
 ___
 * Used Caeser-Cipher algorithm to encrypt files.
 * Used file methods in C to store user data.
-* Add more stuff here!
 <!-- Blockquote -->
 
 
@@ -42,8 +48,8 @@ ___
 
 ### Tasks to implement
 * [x] Create User
-* [ ] Implement Encryption
-* [ ] Update User
+* [x] Implement Encryption
+* [x] Update User
 * [ ] Relocate Files
 * [ ] Backup Functions for intermediate exit
 
@@ -54,7 +60,7 @@ ___
 ___
 Other Intended (not sure if I'll be able to implement though) features include:-
 * *Email based OTP* verification for unlocking files.
-* Multi-user Support.
+* Multi-user Support. (Implemented now!)
 
 ___
 ___
