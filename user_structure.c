@@ -602,6 +602,91 @@ void encrypt1(char* location, char* filepath, int code)
         }
 }
 
+void encrypt2(char* location, char* filepath, int code)
+{
+    int belong_code = belongs_to(location, filepath);
+    if(belong_code == 2)
+    {
+        //return
+        printf(ANSI_COLOR_RED "This file belongs to some other user.\n" ANSI_COLOR_RESET);
+                printf(ANSI_COLOR_YELLOW "Press any key to go back to user home \n" ANSI_COLOR_RESET);
+                int newinput;
+                scanf("%d",&newinput);
+                switch (newinput)
+                {
+                default:
+                    print_post_login_interface(location);
+                } 
+    }
+    else if(belong_code == 0 || belong_code == 1)
+    {
+        if(belong_code == 0)
+        {
+            //append
+            write_to_user(location, filepath);
+        }
+                char ch;
+                FILE *fps, *fpt;
+                fps = fopen(filepath, "r");
+                if(fps == NULL)
+                printf("\nFile not found\n");
+                fpt = fopen("tempfile.png", "w");
+                if(fpt == NULL)
+                    printf("\nCouldn't create temp file\n");
+                else
+                {
+                    int i = 0;
+                    int j = (code%10)+3;
+                    printf(BRED "Creating encrypted temp file..\n" reset);
+                    ch = fgetc(fps);
+                    while(ch != EOF)
+                    {
+                     i++;
+                     if(j%i==0)   
+                     ch = ch+code;
+                     fputc(ch, fpt);
+                     ch = fgetc(fps);
+                     }
+                fclose(fps);
+                fclose(fpt);
+                }
+
+                remove(filepath);
+
+                FILE* fps2,*fpt2;
+                fps2 = fopen(filepath, "w");
+                if(fps2 == NULL)
+                printf("\nFile not found\n");
+                fpt2 = fopen("tempfile.png", "r");
+                if(fpt2 == NULL)
+                printf("\nCouldn't read temp file\n");
+                else
+                {
+                ch = fgetc(fpt2);
+                while(ch != EOF)
+                {
+                    ch = fputc(ch, fps2);
+                    ch = fgetc(fpt2);
+                }
+                fclose(fps2);
+                fclose(fpt2);
+                }
+                remove("tempfile.png");
+                printf(BRED "Removing temp file..\n" reset);
+                printf(BRED "Finalising..\n" reset);
+
+                printf(BRED "File Encrypted Successfully!\n" reset);
+                printf(ANSI_COLOR_YELLOW "Press any key to go back to user home \n" ANSI_COLOR_RESET);
+                int newinput;
+                scanf("%d",&newinput);
+                switch (newinput)
+                {
+                default:
+                    print_post_login_interface(location);
+                } 
+        }
+}
+
 /*
  * Checks if the file to be decrypted belongs to the user or some other user
  * If it belongs to no one or
@@ -641,6 +726,84 @@ void decrypt1(char* location, char* filepath, int code)
         ch = fgetc(fps);
         while(ch != EOF)
         {
+            ch = ch-code;
+            fputc(ch, fpt);
+            ch = fgetc(fps);
+        }
+        fclose(fps);
+        fclose(fpt);
+    }
+    remove(filepath);
+
+    fps = fopen(filepath, "w");
+    if(fps == NULL)
+        printf("\nFile not found\n");
+    fpt = fopen("tempfile.png", "r");
+    if(fpt == NULL)
+        printf("\nCouldn't read temp file\n");
+    else
+    {
+    ch = fgetc(fpt);
+    while(ch != EOF)
+    {
+        ch = fputc(ch, fps);
+        ch = fgetc(fpt);
+    }
+    printf(BGRN "Removing temp file..\n" reset);
+    fclose(fps);
+    fclose(fpt);
+    remove("tempfile.png");
+    }
+    printf(BGRN "Finalising..\n" reset);
+
+    printf(BGRN "File Decrypted Successfully!\n" reset);
+        printf(ANSI_COLOR_YELLOW "Press any key to go back to user home \n" ANSI_COLOR_RESET);
+        int newinput;
+        scanf("%d",&newinput);
+        switch (newinput)
+        {
+        default:
+            print_post_login_interface(location);
+        }
+    }
+}
+
+void decrypt2(char* location, char* filepath, int code)
+{
+    int belong_code = belongs_to(location, filepath);
+    if(belong_code == 2 || belong_code == 0)
+    {
+        //return
+        printf(ANSI_COLOR_RED "This file belongs to some other user.\n" ANSI_COLOR_RESET);
+                printf(ANSI_COLOR_YELLOW "Press any key to go back to user home \n" ANSI_COLOR_RESET);
+                int newinput;
+                scanf("%d",&newinput);
+                switch (newinput)
+                {
+                default:
+                    print_post_login_interface(location);
+                } 
+    }
+    else
+    {
+    char ch;
+    FILE *fps, *fpt;
+    fps = fopen(filepath, "r");
+    if(fps == NULL)
+        printf("\nFile not found\n");
+    fpt = fopen("tempfile.png", "w");
+    if(fpt == NULL)
+        printf("\nCouldn't create temp file\n");
+    else
+    {
+        int i = 0;
+        int j = (code%10)+3;
+        printf(BGRN "Creating decrypted temp file..\n" reset);
+        ch = fgetc(fps);
+        while(ch != EOF)
+        {
+            i++;
+            if(j%i==0)
             ch = ch-code;
             fputc(ch, fpt);
             ch = fgetc(fps);
