@@ -1,4 +1,6 @@
-
+/*
+Color Codes for teminal ANSI
+*/
 
 
 #define ANSI_COLOR_RED     "\x1b[31m"
@@ -63,6 +65,15 @@
 
 // void print_home_screen();
 // void print_password_screen(char* , char*);
+
+
+/*
+This function is to auto increment userID for every new user created so that everyone has a unique ID.
+Implementation?
+Read the last user id from usercount file in admin directory and update it after
+incrementing 1.
+Return this new value to the create_user Function
+*/
 
 int calculate_user_id()
     {
