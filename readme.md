@@ -35,6 +35,8 @@ ___
 ___
 * Used Caeser-Cipher algorithm to encrypt files.
 * Used file methods in C to store user data.
+
+<img src="Project Chart.png"/>
 <!-- Blockquote -->
 
 
@@ -42,7 +44,6 @@ ___
 ___
 ___
 <!-- Images -->
-<!-- ![Markdown Logo](https://markdown-here.com/img/icon256.png) -->
 
 <!-- Github Markdown -->
 
