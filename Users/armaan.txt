@@ -1,6 +1,5 @@
-36
+38
 armaan
-jain
-100
+avi
+31
 /Users/armaan199/Desktop/testfiles/1.txt
-/Users/armaan199/Desktop/testfiles/2.txt

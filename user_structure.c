@@ -413,6 +413,13 @@ void print_edit_user_interface(char* location)
         }
 }
 
+/*
+ * Ask the user to enter the path of any text file.
+ * Checks if the path is valid. If not repeats the process until a valid path is entered or the user enters 'exit'
+ * If a valid path is found, we send the location and fetch the code from user file and send this data
+ * to the encrypt1 function
+*/
+
 
 void print_encryptfile_interface(char* location, int errcode)
 {
@@ -457,6 +464,13 @@ void print_encryptfile_interface(char* location, int errcode)
         // }
 }
 
+/*
+ * Ask the user to enter the path of any text file.
+ * Checks if the path is valid. If not repeats the process until a valid path is entered or the user enters 'exit'
+ * If a valid path is found, we send the location and fetch the code from user file and send this data
+ * to the decrypt1 function
+*/
+
 void print_decryptfile_interface(char* location, int errcode)
 {
         system("clear");
@@ -499,6 +513,13 @@ void print_decryptfile_interface(char* location, int errcode)
         //     print_post_login_interface(location);
         // }
 }
+
+/*
+ * Checks if the file to be encrypted belongs to the user or some other user
+ * If it belongs to no one, then we encrypt the file and map it to the current user.
+ * If it belongs to some other user, then prints an error and returns to home.
+ * If the file belongs to the user already. Simply encrypt it. 
+*/
 
 void encrypt1(char* location, char* filepath, int code)
 {
@@ -581,6 +602,13 @@ void encrypt1(char* location, char* filepath, int code)
         }
 }
 
+/*
+ * Checks if the file to be decrypted belongs to the user or some other user
+ * If it belongs to no one or
+ * If it belongs to some other user, then prints an error and returns to home.
+ * If the file belongs to the user already. Simply decrypt it. 
+*/
+
 void decrypt1(char* location, char* filepath, int code)
 {
     int belong_code = belongs_to(location, filepath);
@@ -655,6 +683,13 @@ void decrypt1(char* location, char* filepath, int code)
     }
 }
 
+/*
+ * Takes a user file and path of a file as input
+ * Returns 0 If file belongs to no one 
+ * Returns 1 If file belongs to current user
+ * Returns 2 If file belongs to some other user
+*/
+
 int belongs(char* location, char* filepath)
 {
         char tempfilepath[100];
@@ -694,6 +729,10 @@ int belongs(char* location, char* filepath)
         fclose (fp1);
 }
 
+/*
+ * Calls belong function for every user and returns the final key to the encrypt and decrypt functions
+*/
+
 int belongs_to(char* location, char* filepath)
 {
     DIR *d;
@@ -721,6 +760,11 @@ int belongs_to(char* location, char* filepath)
     return 0;
 }
 
+/*
+ * If 0 is returned by belongs_to function. Then enters the path of the file 
+ * to the current user and appends it to the end.
+*/
+
 void write_to_user(char* location, char* filepath)
 {
     FILE *fa = fopen(location, "a");
@@ -729,6 +773,9 @@ void write_to_user(char* location, char* filepath)
     fclose(fa);
 }
 
+/*
+ * Own implementation of fprintf()
+*/
 
 void enter_string_to_file(FILE* fp1, char str[]) {
     int i=0;
@@ -738,6 +785,10 @@ void enter_string_to_file(FILE* fp1, char str[]) {
         i++;
     }
 }
+
+/*
+ * Own implementation of substr(left,right)
+*/
 
 char* user_locationstr_to_user(char* str)
 {
