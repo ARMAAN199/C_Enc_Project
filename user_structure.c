@@ -311,7 +311,12 @@ void print_home_screen()
                     }
 }
 
-
+/*
+ * Switch Case is used to ask user for different routes.
+ * A user is allowed to change their password.
+ * To encode or decode a file
+ * or multiple files at once(Not implemented yet)
+*/
 
 void print_post_login_interface(char* location)
 {
@@ -363,6 +368,13 @@ void print_post_login_interface(char* location)
                      }
 }
 
+/*
+ * This allows a user to change thier password.
+ * We create a temporary file that copies all the data of a user
+ * Apart from the password line all the data is copied as is it. and the new password replaces 
+ * the old one.
+*/
+
 void print_edit_user_interface(char* location)
 {
         system("clear");
@@ -400,6 +412,7 @@ void print_edit_user_interface(char* location)
             print_post_login_interface(location);
         }
 }
+
 
 void print_encryptfile_interface(char* location, int errcode)
 {
