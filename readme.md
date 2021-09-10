@@ -36,7 +36,7 @@ ___
 * Used Caeser-Cipher algorithm to encrypt files.
 * Used file methods in C to store user data.
 
-<img src="Project Chart.png"/>
+<img src="Project Chart1.png"/>
 <!-- Blockquote -->
 
 
