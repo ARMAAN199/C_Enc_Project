@@ -66,6 +66,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <dirent.h>
+#include <time.h>
 #include "header.h"
 
 
@@ -86,11 +87,13 @@ int calculate_user_id()
     }
 
 user* create_user(char usrnm[], char pswd[]) {
+    time_t t;
+    t = time(NULL);
     user* obj = malloc(sizeof(user));
     obj->user_id = calculate_user_id();
     strcpy(obj->username,usrnm);
     strcpy(obj->password, pswd); 
-    obj-> code = 12; //Try to generate these randomly using some sort of password encr.
+    obj-> code = t%100; //Try to generate these randomly using some sort of password encr.
     obj-> code2 = 45;//Try to generate these randomly using some sort of password encr.
     obj-> isloggedin = 0;
     return obj;   
@@ -124,6 +127,8 @@ void create_user_file(user* obj)
         fputs(obj->username, fp1);
         fputc('\n', fp1);
         fputs(obj->password, fp1);
+        fputc('\n', fp1);
+        fprintf(fp1, "%d", obj->code);
         fputc('\n', fp1);
         
         
@@ -363,7 +368,17 @@ void print_encryptfile_interface(char* location, int errcode)
         }
         else
         {
-            encrypt1(location, filepath, 15);
+            FILE* fp1 = fopen (location, "r"); 
+            char nextline[10000];
+            int f=0;
+            while (fgets(nextline, sizeof(nextline), fp1)  && f<3) {
+            f++;
+            }
+            char codestr[100];
+            strcpy(codestr , nextline);
+            int code = atoi(codestr);
+            fclose (fp1);
+            encrypt1(location, filepath, code);
         }
 
         // printf("\nPress any key to go back to user home \n");
@@ -396,7 +411,17 @@ void print_decryptfile_interface(char* location, int errcode)
         }
         else
         {
-            decrypt1(location, filepath, 15);
+            FILE* fp1 = fopen (location, "r"); 
+            char nextline[10000];
+            int f=0;
+            while (fgets(nextline, sizeof(nextline), fp1)  && f<3) {
+            f++;
+            }
+            char codestr[100];
+            strcpy(codestr , nextline);
+            int code = atoi(codestr);
+            fclose (fp1);
+            decrypt1(location, filepath, code);
         }
 
         // printf("\nPress any key to go back to user home \n");
@@ -416,7 +441,7 @@ void encrypt1(char* location, char* filepath, int code)
     fps = fopen(filepath, "r");
     if(fps == NULL)
         printf("\nFile not found\n");
-    fpt = fopen("temp.txt", "w");
+    fpt = fopen("tempfile.png", "w");
     if(fpt == NULL)
         printf("\nCouldn't create temp file\n");
     else
@@ -433,22 +458,28 @@ void encrypt1(char* location, char* filepath, int code)
         fclose(fpt);
     }
 
-    fps = fopen(filepath, "w");
-    if(fps == NULL)
+    remove(filepath);
+
+    FILE* fps2,*fpt2;
+    fps2 = fopen(filepath, "w");
+    if(fps2 == NULL)
         printf("\nFile not found\n");
-    fpt = fopen("temp.text", "r");
-    if(fpt == NULL)
-        printf("\nCouldn't create temp file\n");
-    ch = fgetc(fpt);
-    while(ch != EOF)
+    fpt2 = fopen("tempfile.png", "r");
+    if(fpt2 == NULL)
+        printf("\nCouldn't read temp file\n");
+    else
     {
-        ch = fputc(ch, fps);
-        ch = fgetc(fpt);
+        ch = fgetc(fpt2);
+        while(ch != EOF)
+        {
+            ch = fputc(ch, fps2);
+            ch = fgetc(fpt2);
+        }
+        fclose(fps2);
+        fclose(fpt2);
     }
-    // remove("temp.png");
+    remove("tempfile.png");
     printf(BRED "Removing temp file..\n" reset);
-    fclose(fps);
-    fclose(fpt);
     printf(BRED "Finalising..\n" reset);
 
     printf(BRED "File Encrypted Successfully!\n" reset);
@@ -469,39 +500,43 @@ void decrypt1(char* location, char* filepath, int code)
     fps = fopen(filepath, "r");
     if(fps == NULL)
         printf("\nFile not found\n");
-    fpt = fopen("temp", "w");
+    fpt = fopen("tempfile.png", "w");
     if(fpt == NULL)
         printf("\nCouldn't create temp file\n");
     else
     {
-        printf(BGRN "Creating encrypted temp file..\n" reset);
+        printf(BGRN "Creating decrypted temp file..\n" reset);
         ch = fgetc(fps);
         while(ch != EOF)
         {
-            // ch = ch-code;
+            ch = ch-code;
             fputc(ch, fpt);
             ch = fgetc(fps);
         }
         fclose(fps);
         fclose(fpt);
     }
+    remove(filepath);
 
     fps = fopen(filepath, "w");
     if(fps == NULL)
         printf("\nFile not found\n");
-    fpt = fopen("temp", "r");
+    fpt = fopen("tempfile.png", "r");
     if(fpt == NULL)
-        printf("\nCouldn't create temp file\n");
+        printf("\nCouldn't read temp file\n");
+    else
+    {
     ch = fgetc(fpt);
     while(ch != EOF)
     {
         ch = fputc(ch, fps);
         ch = fgetc(fpt);
     }
-    remove("temp");
     printf(BGRN "Removing temp file..\n" reset);
     fclose(fps);
     fclose(fpt);
+    remove("tempfile.png");
+    }
     printf(BGRN "Finalising..\n" reset);
 
     printf(BGRN "File Decrypted Successfully!\n" reset);
