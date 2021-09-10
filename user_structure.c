@@ -1,14 +1,4 @@
-//whenever code starts make sure you change is loggedin for all users to 0
-//and delete all otps
 
-//verify is logged in on every req
-//update user route. MUST..
-//admin mode use directory functions to remove all users, delete all files etc.. and count number of files too
-//to display number of current users.
-
-//try to create login sessions using last login time, system time, isloggedin etc.
-
-//auto increment in userid
 
 
 #define ANSI_COLOR_RED     "\x1b[31m"
@@ -680,6 +670,9 @@ char* user_locationstr_to_user(char* str)
 }
 
 
+
+//WASTE UTILITY CODE
+
 // int main(void)
 // {
 //     print_home_screen();
@@ -718,3 +711,20 @@ char* user_locationstr_to_user(char* str)
     // printf("Enter joining year  : ");
     // scanf("%d" , &det.join_year);
     // fwrite(&det,recsize,1,fp1);
+
+
+
+// THINGS TO DO
+
+
+//whenever code starts make sure you change is loggedin for all users to 0
+//and delete all otps
+
+//verify is logged in on every req
+//update user route. MUST..
+//admin mode use directory functions to remove all users, delete all files etc.. and count number of files too
+//to display number of current users.
+
+//try to create login sessions using last login time, system time, isloggedin etc.
+
+//auto increment in userid
